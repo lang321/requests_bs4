@@ -23,18 +23,23 @@ def getHTMLText(url):
 
 
 if __name__ == '__main__':
-    html = getHTMLText("http://tieba.baidu.com/f?ie=utf-8&kw=python&fr=search&red_tag=v3486938094")
-    print(html)
+    html = getHTMLText("https://tieba.baidu.com/")
     soup = BeautifulSoup(html, "html.parser")
-    # soup = BeautifulSoup(open('index.html','rb'), "html.parser")
-    # print(soup.prettify())
-    # print(soup.body.contents)
-    # print(len(soup.body.contents))   #body字标签
+    ul = soup.find('ul', id='new_list')
+    new_list = ul.findAll('li',{'class':'clearfix j_feed_li '})
+    news = []
+    for item in new_list:
+        title = item.select('a.title')
+        click_num = item.select('span[class="list-post-num"] em')
+        news_title = ""
+        news_click_num = 0
+        if len(title)>0:
+            news_title = title[0].get_text()
+        if len(click_num)>0:
+            news_click_num = click_num[0].get_text()
+        news.append((news_title, news_click_num))
+    for new in news:
+        print(new)
 
-    # findAll(True)
-    # for a in soup.findAll(re.compile('^i'), {'name':'ie'}):  # 匹配以b开头的
-    #     print(a)
-    for a in soup.findAll('a',{'class':re.compile('^mn')}):  # 匹配以b开头的
-        print(a)
-    # for a in soup.find_all(string = re.compile("百度")):  # 匹配以b开头的
-    #     print(a)
+
+

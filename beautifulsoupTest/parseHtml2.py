@@ -22,6 +22,9 @@ if __name__ == '__main__':
     soup = BeautifulSoup(open('index.html', 'rb'), "html.parser")
     # print(soup.prettify())
     print(soup.body.contents)
+    print(soup.find('p',id='p2').get_text())
+    print(soup.find('p',id='p2').string)
+    print(soup.find('div').get_text())
     print(len(soup.body.contents))   #body字标签
 
     # find
